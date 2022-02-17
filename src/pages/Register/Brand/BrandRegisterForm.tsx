@@ -1,15 +1,16 @@
 import * as React from "react";
 import styled from "styled-components";
 import toast, { Toaster } from 'react-hot-toast';
-import EmailField from "../../../components/UserRegister/EmailField";
-import ConfirmEmailField from "../../../components/UserRegister/ConfirmEmailField";
-import PasswordField from "../../../components/UserRegister/PasswordField";
-import ConfirmPasswordField from "../../../components/UserRegister/ConfirmPassword";
-import CountrySelector from "../../../components/UserRegister/CountrySelector";
 import ActionButtons from "../../../components/UserRegister/ActionButtons";
 import saveBrandData from "../../../api/saveBrandData";
 import CompanyField from "../../../components/CompanyRegister/CompanyField";
 import CeoField from "../../../components/CompanyRegister/CeoField";
+import { v4 as uuid } from 'uuid';
+import EmailField from "../../../components/CompanyRegister/EmailField";
+import ConfirmEmailField from "../../../components/CompanyRegister/ConfirmEmail";
+import PasswordField from "../../../components/CompanyRegister/PasswordField";
+import ConfirmPasswordField from "../../../components/CompanyRegister/ConfirmPasswordField";
+import CountrySelector from "../../../components/CompanyRegister/CountrySelector";
 
 const FormTitleWrapper = styled.div`
     margin: 0 auto;
@@ -37,66 +38,82 @@ const BrandRegisterForm: React.FC = () => {
         confirmEmail: "",
     };
 
-    const [brandData, setUserData] = React.useState<BrandData>(defaultBrandData) 
-    const [isEnabledSaveButton, setIsEnableSaveButton] = React.useState(false);
-    const [passwordError, setPasswordError] = React.useState<string | undefined>()
-    const [emailError, setEmailError] = React.useState<string | undefined>()
+    const brandData = React.useRef(defaultBrandData);
+    const [formKey, setFormKey] = React.useState(uuid())
 
-    React.useEffect(() => {
-        if(brandData.email !== brandData.confirmEmail){
-            setEmailError("Los campos de confirmación de email y de email deben coincidir")
-        } else {
-            setEmailError(undefined);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brandData.confirmEmail])
 
-    React.useEffect(() => {
-        if(brandData.password !== brandData.confirmPassword){
-            setPasswordError("Los campos de confirmación de contraseña y de contraseña deben coincidir")
-        }else {
-            setPasswordError(undefined);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [brandData.confirmPassword])
+    // React.useEffect(() => {
+    //     if(brandData.current.password !== brandData.current.confirmPassword){
+    //         setPasswordError("Los campos de confirmación de contraseña y de contraseña deben coincidir")
+    //     }else {
+    //         setPasswordError(undefined);
+    //     }
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [brandData.current.confirmPassword])
 
-    React.useEffect(() => {
-        if(brandData){
-            if(!emailError && !passwordError && brandData.company.length && brandData.CEO.length && brandData.email.length && brandData.password.length && brandData.country.length ){
-                setIsEnableSaveButton(true)
-            } else {
-                setIsEnableSaveButton(false)
-            }
-        }
-    }, [emailError, passwordError, brandData])
+    // React.useEffect(() => {
+    //     if(brandData){
+    //         if(!emailError && !passwordError && brandData.current.company.length && brandData.current.CEO.length && brandData.current.email.length && brandData.current.password.length && brandData.current.country.length ){
+    //             setIsEnableSaveButton(true)
+    //         } else {
+    //             setIsEnableSaveButton(false)
+    //         }
+    //     }
+    // }, [emailError, passwordError, brandData])
 
-    const setData = (val: BrandData) => {
-        setUserData(val)
+    const setData = (val: BrandData) => {   
+        brandData.current = val;    
     }
 
     const resetUser = () => {   
-        setUserData(defaultBrandData)
+        brandData.current = defaultBrandData;
+        setFormKey(uuid())
     }
 
-    const saveUser = async () => {
-        setIsEnableSaveButton(false)
-        const save = await saveBrandData(brandData);
-        toast.success(`El usuario ${save.company} ha sido creado correctamente`,{
-            duration: 4000,
-            position: 'bottom-center',
-        })
-        resetUser();
+    const saveBrand = async () => {
+        console.log(brandData.current);
+        if(brandData.current.email !== brandData.current.confirmEmail){
+            toast.error(`Los campos de email y confirmar email no coinciden`,{
+                duration: 4000,
+                position: 'top-center',
+            })
+
+            return;
+        }
+
+        if(brandData.current.password !== brandData.current.confirmPassword){
+            toast.error(`Los campos de contraseña y confirmar contraseña no coinciden`,{
+                duration: 4000,
+                position: 'top-center',
+            })
+
+            return;
+        }
+        
+        // setIsEnableSaveButton(false)
+        // const save = await saveBrandData(brandData.current);
+        // toast.success(`El usuario ${save.company} ha sido creado correctamente`,{
+        //     duration: 4000,
+        //     position: 'bottom-center',
+        // })
+        // resetUser();
     }
 
     return (
         <>
             <FormTitleWrapper>
-                <h1>Registro de usuarios</h1>
+                <h1>Registro de empresa</h1>
             </FormTitleWrapper>
-            <CompanyField userData={brandData} setData={setData} />
-            <CeoField userData={brandData} setData={setData} />
-            
-            <ActionButtons saveUser={saveUser} resetUser={resetUser} isEnableSaveButton={isEnabledSaveButton} />
+            <div key={formKey}>
+                <CompanyField brandData={brandData.current} setData={setData} />
+                <CeoField brandData={brandData.current} setData={setData} />
+                <EmailField brandData={brandData.current} setData={setData} />
+                <ConfirmEmailField  brandData={brandData.current} setData={setData} />
+                <PasswordField brandData={brandData.current} setData={setData} />
+                <ConfirmPasswordField brandData={brandData.current} setData={setData} />
+                <CountrySelector brandData={brandData.current} setData={setData} />
+                <ActionButtons saveUser={saveBrand} resetUser={resetUser} isEnableSaveButton={true} />
+            </div>
             <Toaster />
         </>
     )

@@ -3,32 +3,31 @@ import { BrandData } from "../../pages/Register/Brand/BrandRegisterForm";
 import { FormInput, InputLabel, FieldWrapper } from "../UserRegister/styledBasics";
 
 
-interface CeoFieldProps{
+interface ConfirmPasswordFieldProps{
     brandData: BrandData;
     setData: (val: BrandData) => void
 }
 
-const CeoField: React.FC<CeoFieldProps> = (props) => {
+const ConfirmPasswordField: React.FC<ConfirmPasswordFieldProps> = (props) => {
     const {setData, brandData} =  props;
-    const [CEO, setCEO] = React.useState(() => brandData.CEO); 
+    const [password, setPassword] = React.useState(() => brandData.confirmPassword); 
 
     const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {       
-        console.log(event.target.value);
-        setCEO(event.target.value);
+        setPassword(event.target.value);
     }
 
     const handleOnBlur = () => {
-        const newData = Object.assign({}, brandData, {CEO: CEO})
+        const newData = Object.assign({}, brandData, {confirmPassword: password})
         setData(newData);
     }
 
     return (
         <FieldWrapper>
-            <InputLabel>CEO de la compañía</InputLabel>
-            <FormInput data-e2e="nameInput" type="text" value={CEO} onChange={handleOnChange} onBlur={handleOnBlur} />
+            <InputLabel>Confirma la contraseña</InputLabel>
+            <FormInput data-e2e="nameInput" type="password" value={password} onChange={handleOnChange} onBlur={handleOnBlur} />
         </FieldWrapper>
     )
     
 }
 
-export default CeoField;
+export default ConfirmPasswordField;

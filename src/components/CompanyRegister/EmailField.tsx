@@ -3,32 +3,31 @@ import { BrandData } from "../../pages/Register/Brand/BrandRegisterForm";
 import { FormInput, InputLabel, FieldWrapper } from "../UserRegister/styledBasics";
 
 
-interface CeoFieldProps{
+interface EmailFieldProps{
     brandData: BrandData;
     setData: (val: BrandData) => void
 }
 
-const CeoField: React.FC<CeoFieldProps> = (props) => {
+const EmailField: React.FC<EmailFieldProps> = (props) => {
     const {setData, brandData} =  props;
-    const [CEO, setCEO] = React.useState(() => brandData.CEO); 
+    const [email, setEmail] = React.useState(() => brandData.email); 
 
     const handleOnChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {       
-        console.log(event.target.value);
-        setCEO(event.target.value);
+        setEmail(event.target.value);
     }
 
     const handleOnBlur = () => {
-        const newData = Object.assign({}, brandData, {CEO: CEO})
+        const newData = Object.assign({}, brandData, {email: email})
         setData(newData);
     }
 
     return (
         <FieldWrapper>
-            <InputLabel>CEO de la compañía</InputLabel>
-            <FormInput data-e2e="nameInput" type="text" value={CEO} onChange={handleOnChange} onBlur={handleOnBlur} />
+            <InputLabel>Email de la compañía</InputLabel>
+            <FormInput data-e2e="nameInput" type="text" value={email} onChange={handleOnChange} onBlur={handleOnBlur} />
         </FieldWrapper>
     )
     
 }
 
-export default CeoField;
+export default EmailField;
