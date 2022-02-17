@@ -5,7 +5,7 @@ import { FormInput, InputLabel, FieldWrapper } from "../UserRegister/styledBasic
 
 interface ConfirmEmailFieldProps{
     brandData: BrandData;
-    setData: (val: BrandData) => void;
+    setData: (key: string, val: string) => void
 }
 
 const ConfirmEmailField: React.FC<ConfirmEmailFieldProps> = (props) => {
@@ -17,8 +17,7 @@ const ConfirmEmailField: React.FC<ConfirmEmailFieldProps> = (props) => {
     }
 
     const handleOnBlur = () => {
-        const newData = Object.assign({}, brandData, {confirmEmail: email})
-        setData(newData);
+        setData("confirmEmail", email);
     }
 
     return (

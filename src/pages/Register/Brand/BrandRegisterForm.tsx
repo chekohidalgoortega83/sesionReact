@@ -11,6 +11,7 @@ import ConfirmEmailField from "../../../components/CompanyRegister/ConfirmEmail"
 import PasswordField from "../../../components/CompanyRegister/PasswordField";
 import ConfirmPasswordField from "../../../components/CompanyRegister/ConfirmPasswordField";
 import CountrySelector from "../../../components/CompanyRegister/CountrySelector";
+import { useAppContext } from "../../../context/AppContext";
 
 const FormTitleWrapper = styled.div`
     margin: 0 auto;
@@ -27,6 +28,8 @@ export type BrandData = {
     confirmEmail: string;
 }
 
+type keys = "company" | "CEO" | "email" | "country" | "password" |"confirmPassword" | "confirmEmail";
+
 const BrandRegisterForm: React.FC = () => {
     const defaultBrandData = {
         company: "",
@@ -40,29 +43,12 @@ const BrandRegisterForm: React.FC = () => {
 
     const brandData = React.useRef(defaultBrandData);
     const [formKey, setFormKey] = React.useState(uuid())
+    const {setBrandInContext} = useAppContext();
 
 
-    // React.useEffect(() => {
-    //     if(brandData.current.password !== brandData.current.confirmPassword){
-    //         setPasswordError("Los campos de confirmación de contraseña y de contraseña deben coincidir")
-    //     }else {
-    //         setPasswordError(undefined);
-    //     }
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [brandData.current.confirmPassword])
 
-    // React.useEffect(() => {
-    //     if(brandData){
-    //         if(!emailError && !passwordError && brandData.current.company.length && brandData.current.CEO.length && brandData.current.email.length && brandData.current.password.length && brandData.current.country.length ){
-    //             setIsEnableSaveButton(true)
-    //         } else {
-    //             setIsEnableSaveButton(false)
-    //         }
-    //     }
-    // }, [emailError, passwordError, brandData])
-
-    const setData = (val: BrandData) => {   
-        brandData.current = val;    
+    const setData = (key: string, val: string) => {   
+        brandData.current[key as keys] = val;    
     }
 
     const resetUser = () => {   
@@ -71,8 +57,8 @@ const BrandRegisterForm: React.FC = () => {
     }
 
     const saveBrand = async () => {
-        console.log(brandData.current);
-        if(brandData.current.email !== brandData.current.confirmEmail){
+        const data = brandData.current;   
+        if(data.email !== data.confirmEmail){
             toast.error(`Los campos de email y confirmar email no coinciden`,{
                 duration: 4000,
                 position: 'top-center',
@@ -81,7 +67,7 @@ const BrandRegisterForm: React.FC = () => {
             return;
         }
 
-        if(brandData.current.password !== brandData.current.confirmPassword){
+        if(data.password !==data.confirmPassword){
             toast.error(`Los campos de contraseña y confirmar contraseña no coinciden`,{
                 duration: 4000,
                 position: 'top-center',
@@ -90,13 +76,14 @@ const BrandRegisterForm: React.FC = () => {
             return;
         }
         
-        // setIsEnableSaveButton(false)
-        // const save = await saveBrandData(brandData.current);
-        // toast.success(`El usuario ${save.company} ha sido creado correctamente`,{
-        //     duration: 4000,
-        //     position: 'bottom-center',
-        // })
-        // resetUser();
+        const save = await saveBrandData(data);
+        toast.success(`La compañia ${save.company} ha sido creada correctamente`,{
+            duration: 4000,
+            position: 'bottom-center',
+        })
+
+        setBrandInContext(data);
+        resetUser();
     }
 
     return (

@@ -4,7 +4,7 @@ import { FormInput, InputLabel, FieldWrapper } from "../UserRegister/styledBasic
 
 interface CompanyFieldProps{
     brandData: BrandData;
-    setData: (val: BrandData) => void
+    setData: (key: string, val: string) => void
 }
 
 const CompanyField: React.FC<CompanyFieldProps> = (props) => {
@@ -17,8 +17,7 @@ const CompanyField: React.FC<CompanyFieldProps> = (props) => {
     }
 
     const handleOnBlur = () => {
-        const newData = Object.assign({}, brandData, {company: company})
-        setData(newData);
+        setData("company", company);
     }
 
     return (

@@ -5,7 +5,7 @@ import { FormInput, InputLabel, FieldWrapper } from "../UserRegister/styledBasic
 
 interface EmailFieldProps{
     brandData: BrandData;
-    setData: (val: BrandData) => void
+    setData: (key: string, val: string) => void
 }
 
 const EmailField: React.FC<EmailFieldProps> = (props) => {
@@ -17,8 +17,7 @@ const EmailField: React.FC<EmailFieldProps> = (props) => {
     }
 
     const handleOnBlur = () => {
-        const newData = Object.assign({}, brandData, {email: email})
-        setData(newData);
+        setData("email", email);
     }
 
     return (

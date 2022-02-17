@@ -5,7 +5,7 @@ import { InputLabel, FieldWrapper, FormSelector } from "../UserRegister/styledBa
 
 interface CountrySelectorProps{
     brandData: BrandData;
-    setData: (val: BrandData) => void
+    setData: (key: string, val: string) => void
 }
 
 const CountrySelector: React.FC<CountrySelectorProps> = (props) => {
@@ -15,8 +15,7 @@ const CountrySelector: React.FC<CountrySelectorProps> = (props) => {
     const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {       
         const value = event.target.value;
         setCountry(value)
-        const newData = Object.assign({}, brandData, {country: value})
-        setData(newData);
+        setData("country", value);
     }
 
     return (

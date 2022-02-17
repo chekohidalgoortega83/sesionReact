@@ -10,6 +10,7 @@ import NameField from "../../../components/UserRegister/NameField";
 import PasswordField from "../../../components/UserRegister/PasswordField";
 import SurnameField from "../../../components/UserRegister/SurnameField";
 import toast, { Toaster } from 'react-hot-toast';
+import { useAppContext } from "../../../context/AppContext";
 
 const FormTitleWrapper = styled.div`
     margin: 0 auto;
@@ -27,6 +28,7 @@ export type userData = {
 }
 
 const UserRegisterForm: React.FC = () => {
+    const {setUserInContext} = useAppContext();
     const defaultUserData = {
         name: "",
         surname:  "",
@@ -85,6 +87,7 @@ const UserRegisterForm: React.FC = () => {
             duration: 4000,
             position: 'bottom-center',
         })
+        setUserInContext(userData);
         resetUser();
     }
 

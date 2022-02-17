@@ -5,7 +5,7 @@ import { FormInput, InputLabel, FieldWrapper } from "../UserRegister/styledBasic
 
 interface PasswordFieldProps{
     brandData: BrandData;
-    setData: (val: BrandData) => void
+    setData: (key: string, val: string) => void
 }
 
 const PasswordField: React.FC<PasswordFieldProps> = (props) => {
@@ -17,8 +17,7 @@ const PasswordField: React.FC<PasswordFieldProps> = (props) => {
     }
 
     const handleOnBlur = () => {
-        const newData = Object.assign({}, brandData, {password: password})
-        setData(newData);
+        setData("password", password);
     }
 
     return (
