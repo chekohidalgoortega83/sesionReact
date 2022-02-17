@@ -22,7 +22,7 @@ const ConfirmEmailField: React.FC<ConfirmEmailFieldProps> = (props) => {
             <InputLabel>Confirmacion del email</InputLabel>
             <FormInput data-e2e="confirmEmailInput"  type="email" value={userData.confirmEmail} onChange={handleOnChange} />
             {emailError && 
-                <ErrorLabel>{emailError}</ErrorLabel>
+                <ErrorLabel data-e2e="emailError">{emailError}</ErrorLabel>
             }
         </FieldWrapper>
     )

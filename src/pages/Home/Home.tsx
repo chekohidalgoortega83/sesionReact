@@ -13,17 +13,17 @@ const Home: React.FC = () => {
 
             {
                 context.brand === undefined && context.user === undefined &&
-                <span data-e2e="Initial MSG">Registrate antes de hacer nada</span>
+                <span data-e2e="InitialMSG">Registrate antes de hacer nada</span>
             } 
 
             {
                 context.brand !== undefined && 
-                <span data-e2e="Initial MSG">Bienvenido CEO de  {context.brand.company}</span>
+                <span data-e2e="InitialMSG">Bienvenido CEO de  {context.brand.company}</span>
             }
 
             {
                 context.user !== undefined && 
-                <span data-e2e="Initial MSG">Hola {context.user.name} {context.user.surname}</span>
+                <span data-e2e="InitialMSG">Hola {context.user.name} {context.user.surname}</span>
             }
         </Layout>
     )

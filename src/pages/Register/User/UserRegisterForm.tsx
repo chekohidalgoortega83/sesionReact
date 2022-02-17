@@ -84,7 +84,7 @@ const UserRegisterForm: React.FC = () => {
         setIsEnableSaveButton(false)
         const save = await saveUserData(userData);
         toast.success(`El usuario ${save.name} ${save.surname} ha sido creado correctamente`,{
-            duration: 4000,
+            duration: 14000,
             position: 'bottom-center',
         })
         setUserInContext(userData);

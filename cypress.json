@@ -1,0 +1,7 @@
+{
+    "retries": 2,
+    "video": true,
+    "videoCompression": false,
+    "viewportHeight": 1000,
+    "viewportWidth": 1200
+}

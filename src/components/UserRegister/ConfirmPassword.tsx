@@ -22,7 +22,7 @@ const ConfirmPasswordField: React.FC<ConfirmPasswordFieldProps> = (props) => {
             <InputLabel>Confirmar contraseña</InputLabel>
             <FormInput data-e2e="confirmPasswordInput" type="password" value={userData.confirmPassword} onChange={handleOnChange} />
             {passwordError && 
-                <ErrorLabel>{passwordError}</ErrorLabel>
+                <ErrorLabel data-e2e="passwordError">{passwordError}</ErrorLabel>
             }
         </FieldWrapper>
     )

@@ -24,13 +24,13 @@ const linkStyle = {
 const Nav: React.FC = () => {
     return <>
         <Button>
-            <Link style={linkStyle} to="/">Home</Link>
+            <Link data-e2e="homeBtn" style={linkStyle} to="/">Home</Link>
         </Button>
         <Button>
-            <Link style={linkStyle} to="/register/user">Registrar usuario</Link>
+            <Link data-e2e="userBtn" style={linkStyle} to="/register/user">Registrar usuario</Link>
         </Button>
         <Button>
-            <Link style={linkStyle} to="/register/brand">Registrar Marca</Link>
+            <Link data-e2e="companyBtn" style={linkStyle} to="/register/brand">Registrar Marca</Link>
         </Button>
     </>
 }

@@ -1,0 +1,16 @@
+{
+  "company" : {
+    "company": "Repsol",
+    "ceo": "Perico de los palotes",
+    "email": "pedro@repsol.com",
+    "pass": "12345",
+    "country": "Mozambique"
+  },
+  "user": {
+    "name": "Cañita",
+    "surname": "Brava",
+    "email": "Cañita@brava.com",
+    "pass": "1234",
+    "country": "España"
+  }
+}
